@@ -1,7 +1,8 @@
-// App.jsx
 import { useEffect, useState } from "react"
+import { Route, Routes } from "react-router-dom"
+import LoginPage from "./pages/LoginPage"
 
-function App() {
+function HealthCheck() {
   const [status, setStatus] = useState("")
 
   useEffect(() => {
@@ -11,6 +12,15 @@ function App() {
   }, [])
 
   return <div>{status}</div>
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HealthCheck />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  )
 }
 
 export default App
