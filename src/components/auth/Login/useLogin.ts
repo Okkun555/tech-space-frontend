@@ -1,8 +1,10 @@
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
+import {mutate} from "swr";
 import useSWRMutation from "swr/mutation";
 import {z} from "zod";
 import {fieldLabels, validationMessages} from "../../../constants/validationMessages";
+import {CURRENT_USER_KEY} from "../../../hooks/useCurrentUser";
 import {postFetcher} from "../../../libs/api";
 
 const loginSchema = z.object({
@@ -50,6 +52,7 @@ export const useLogin = () => {
                 password: data.password,
             },
         })
+        await mutate(CURRENT_USER_KEY)
     }
 
     return {

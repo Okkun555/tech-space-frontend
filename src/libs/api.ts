@@ -11,14 +11,16 @@ export class ApiError extends Error {
 }
 
 const request = async <TResponse, TBody>(
-    method: "POST" | "PUT" | "PATCH" | "DELETE",
+    method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
     url: string,
     body?: TBody,
 ): Promise<TResponse> => {
+    const hasBody = body !== undefined
     const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
-        body: body !== undefined ? JSON.stringify(body) : undefined,
+        credentials: "include",
+        headers: hasBody ? { "Content-Type": "application/json" } : undefined,
+        body: hasBody ? JSON.stringify(body) : undefined,
     })
 
     const data = res.status === 204 ? null : await res.json().catch(() => null)
@@ -29,6 +31,9 @@ const request = async <TResponse, TBody>(
 
     return data as TResponse
 }
+
+export const getFetcher = <TResponse>(url: string): Promise<TResponse> =>
+    request<TResponse, undefined>("GET", url)
 
 export const postFetcher = async <TResponse, TBody>(
     url: string,
