@@ -1,4 +1,5 @@
 import type {FC} from "react";
+import {Link} from "react-router-dom";
 import {
   Base,
   Button,
@@ -8,6 +9,7 @@ import {
   Input,
   SmartHRLogo,
   Stack,
+  TextLink,
 } from "smarthr-ui"
 import {useLogin} from "./useLogin.ts";
 
@@ -72,6 +74,12 @@ export const Login: FC = () => {
               </Button>
             </Stack>
           </form>
+
+          <Stack gap={0.5} align="center">
+            <TextLink elementAs={Link} to="/signup">
+              アカウント作成はこちら
+            </TextLink>
+          </Stack>
         </Stack>
       </Base>
     </Center>
