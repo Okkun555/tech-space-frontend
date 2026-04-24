@@ -1,7 +1,10 @@
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
+
+import useSWRMutation from "swr/mutation";
 import {z} from "zod";
 import {fieldLabels, validationMessages} from "../../../constants/validationMessages";
+import {postFetcher} from "../../../libs/api";
 
 const signupSchema = z
     .object({
@@ -23,6 +26,19 @@ const signupSchema = z
 
 type SignupFormValues = z.infer<typeof signupSchema>
 
+type SignupRequest = {
+    user: {
+        email: string
+        password: string
+        password_confirmation: string
+    }
+}
+
+type SignupResponse = {
+    id: number
+    email: string
+}
+
 export const useSignup = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<SignupFormValues>({
         defaultValues: {
@@ -33,8 +49,19 @@ export const useSignup = () => {
         resolver: zodResolver(signupSchema),
     })
 
-    const onSubmit = (data: SignupFormValues) => {
-        console.log("送信処理", data)
+    const { trigger, isMutating } = useSWRMutation(
+        "/api/auth/signup",
+        postFetcher<SignupResponse, SignupRequest>,
+    )
+
+    const onSubmit = async (data: SignupFormValues) => {
+        await trigger({
+            user: {
+                email: data.email,
+                password: data.password,
+                password_confirmation: data.passwordConfirmation,
+            },
+        })
     }
 
     return {
@@ -42,5 +69,6 @@ export const useSignup = () => {
         errors,
         handleSubmit,
         onSubmit,
+        isMutating,
     }
 }

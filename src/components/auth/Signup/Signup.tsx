@@ -18,7 +18,8 @@ export const Signup: FC = () => {
     register,
     handleSubmit,
     onSubmit,
-    errors
+    errors,
+    isMutating,
   } = useSignup()
 
   return (
@@ -82,6 +83,8 @@ export const Signup: FC = () => {
                 type="submit"
                 variant="primary"
                 wide
+                loading={isMutating}
+                disabled={isMutating}
               >
                 アカウント作成
               </Button>
