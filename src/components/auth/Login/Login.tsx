@@ -1,0 +1,79 @@
+import type {FC} from "react";
+import {
+  Base,
+  Button,
+  Center,
+  FormControl,
+  Heading,
+  Input,
+  SmartHRLogo,
+  Stack,
+} from "smarthr-ui"
+import {useLogin} from "./useLogin.ts";
+
+export const Login: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    errors
+  } = useLogin()
+
+  return (
+    <Center
+      minHeight="100svh"
+      padding={1}
+      verticalCentering
+      style={{ backgroundColor: "var(--shr-color-base-grey)" }}
+    >
+      <Base padding={3} radius="m" layer={3} style={{ width: 480 }}>
+        <Stack gap={2} align="stretch">
+          <Stack gap={2} align="center">
+            <SmartHRLogo fill="brand" />
+            <Heading type="sectionTitle" size="L">
+              Tech Space ログイン画面
+            </Heading>
+          </Stack>
+
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Stack gap={1.25} align="stretch">
+              <FormControl
+                label="メールアドレス"
+                errorMessages={errors.email?.message}
+              >
+                <Input
+                  type="email"
+                  autoComplete="email"
+                  width="100%"
+                  error={!!errors.email}
+                  {...register("email")}
+                />
+              </FormControl>
+
+              <FormControl
+                label="パスワード"
+                errorMessages={errors.password?.message}
+              >
+                <Input
+                  type="password"
+                  autoComplete="current-password"
+                  width="100%"
+                  error={!!errors.password}
+                  {...register("password")}
+                />
+              </FormControl>
+
+              <Button
+                type="submit"
+                variant="primary"
+                wide
+              >
+                ログイン
+              </Button>
+            </Stack>
+          </form>
+        </Stack>
+      </Base>
+    </Center>
+  )
+}
