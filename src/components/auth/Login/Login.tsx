@@ -18,7 +18,8 @@ export const Login: FC = () => {
     register,
     handleSubmit,
     onSubmit,
-    errors
+    errors,
+    isMutating,
   } = useLogin()
 
   return (
@@ -69,6 +70,8 @@ export const Login: FC = () => {
                 type="submit"
                 variant="primary"
                 wide
+                loading={isMutating}
+                disabled={isMutating}
               >
                 ログイン
               </Button>

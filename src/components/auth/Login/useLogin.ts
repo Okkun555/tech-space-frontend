@@ -1,7 +1,9 @@
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
+import useSWRMutation from "swr/mutation";
 import {z} from "zod";
 import {fieldLabels, validationMessages} from "../../../constants/validationMessages";
+import {postFetcher} from "../../../libs/api";
 
 const loginSchema = z.object({
     email: z
@@ -15,6 +17,18 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
+type LoginRequest = {
+    session: {
+        email: string
+        password: string
+    }
+}
+
+type LoginResponse = {
+    id: number
+    email: string
+}
+
 export const useLogin = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<LoginFormValues>({
         defaultValues: {
@@ -24,8 +38,18 @@ export const useLogin = () => {
         resolver: zodResolver(loginSchema),
     })
 
-    const onSubmit = (data: LoginFormValues) => {
-        console.log("送信処理" + data)
+    const { trigger, isMutating } = useSWRMutation(
+        "/api/auth/login",
+        postFetcher<LoginResponse, LoginRequest>,
+    )
+
+    const onSubmit = async (data: LoginFormValues) => {
+        await trigger({
+            session: {
+                email: data.email,
+                password: data.password,
+            },
+        })
     }
 
     return {
@@ -33,5 +57,6 @@ export const useLogin = () => {
         errors,
         handleSubmit,
         onSubmit,
+        isMutating,
     }
 }
