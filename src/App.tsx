@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react"
-import { Route, Routes } from "react-router-dom"
-import LoginPage from "./pages/LoginPage"
-import SignupPage from "./pages/SignupPage"
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ProfileCreate from "./pages/ProfileCreatePage";
 
 function HealthCheck() {
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3000/health/check")
-        .then(res => res.json())
-        .then(data => setStatus(data.status))
-  }, [])
+      .then((res) => res.json())
+      .then((data) => setStatus(data.status));
+  }, []);
 
-  return <div>{status}</div>
+  return <div>{status}</div>;
 }
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
       <Route path="/" element={<HealthCheck />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/profile/new" element={<ProfileCreate />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
