@@ -4,4 +4,10 @@ export const API_PATHS = {
     signup: "/api/auth/signup",
     me: "/api/auth/me",
   },
+  profile: {
+    create: "/api/users/profile",
+  },
+  occupations: {
+    index: "/api/occupations",
+  },
 } as const;
