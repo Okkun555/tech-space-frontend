@@ -1,7 +1,13 @@
 import type { CSSProperties, FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { Button } from "smarthr-ui";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
+import { useLogout } from "../../../hooks/useLogout";
 
 export const HeaderLayout: FC = () => {
+  const { currentUser } = useCurrentUser();
+  const { logout, isMutating } = useLogout();
+
   return (
     <>
       <header style={headerStyle}>
@@ -23,15 +29,20 @@ export const HeaderLayout: FC = () => {
           Tech Space
         </NavLink>
 
-        <nav style={navStyle}>
-          <NavLink
-            to="/"
-            end
-            style={({ isActive }) => getNavLinkStyle(isActive)}
-          >
-            ホーム
-          </NavLink>
-        </nav>
+        {currentUser && (
+          <div style={userMenuStyle}>
+            <span style={userEmailStyle}>{currentUser.email}</span>
+            <Button
+              size="S"
+              variant="secondary"
+              onClick={logout}
+              loading={isMutating}
+              disabled={isMutating}
+            >
+              ログアウト
+            </Button>
+          </div>
+        )}
       </header>
       <main style={mainStyle}>
         <Outlet />
@@ -91,4 +102,16 @@ const getNavLinkStyle = (isActive: boolean): CSSProperties => ({
 const mainStyle: CSSProperties = {
   minHeight: "calc(100svh - 62px)",
   backgroundColor: "var(--shr-color-base-grey)",
+};
+
+const userMenuStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+  marginLeft: "auto",
+};
+
+const userEmailStyle: CSSProperties = {
+  fontSize: 13,
+  color: HEADER_TEXT_MUTED,
 };

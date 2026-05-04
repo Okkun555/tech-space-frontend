@@ -1,5 +1,5 @@
-import type {FC} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, type FC} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {
   Base,
   Button,
@@ -11,9 +11,12 @@ import {
   Stack,
   TextLink,
 } from "smarthr-ui"
+import {useCurrentUser} from "../../../hooks/useCurrentUser.ts";
 import {useLogin} from "./useLogin.ts";
 
 export const Login: FC = () => {
+  const navigate = useNavigate();
+  const {isLoggedIn, hasProfile, isLoading} = useCurrentUser();
   const {
     register,
     handleSubmit,
@@ -21,6 +24,11 @@ export const Login: FC = () => {
     errors,
     isMutating,
   } = useLogin()
+
+  useEffect(() => {
+    if (isLoading || !isLoggedIn) return;
+    navigate(hasProfile ? "/" : "/profile/new", { replace: true });
+  }, [isLoading, isLoggedIn, hasProfile, navigate]);
 
   return (
     <Center

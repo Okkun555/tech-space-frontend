@@ -19,8 +19,9 @@ export const useCurrentUser = () => {
   const isUnauthorized = error instanceof ApiError && error.status === 401;
 
   return {
-    currentUser: data?.user ?? null,
-    isLoggedIn: !!data?.user,
+    currentUser: data?.data ?? null,
+    isLoggedIn: !!data?.data,
+    hasProfile: !!data?.data?.profile,
     isLoading,
     error: isUnauthorized ? null : error,
   };

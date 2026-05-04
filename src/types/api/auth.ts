@@ -1,10 +1,22 @@
+import type { Gender, Occupation } from "./profile";
+
+export type CurrentUserProfile = {
+  id: number;
+  name: string;
+  birthday: string;
+  gender: Gender;
+  introduction: string;
+  occupation: Occupation;
+};
+
 export type CurrentUser = {
   id: number;
   email: string;
+  profile?: CurrentUserProfile;
 };
 
 export type MeResponse = {
-  user: CurrentUser;
+  data: CurrentUser;
 };
 
 export type LoginRequest = {
@@ -15,8 +27,10 @@ export type LoginRequest = {
 };
 
 export type LoginResponse = {
-  id: number;
-  email: string;
+  data: {
+    id: number;
+    email: string;
+  };
 };
 
 export type SignupRequest = {
@@ -28,6 +42,8 @@ export type SignupRequest = {
 };
 
 export type SignupResponse = {
-  id: number;
-  email: string;
+  data: {
+    id: number;
+    email: string;
+  };
 };

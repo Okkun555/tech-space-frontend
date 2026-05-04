@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProfileCreate from "./pages/ProfileCreatePage";
 import { HeaderLayout } from "./components/layout/Header";
+import { RequireAuth } from "./components/auth/RequireAuth";
 
 function HealthCheck() {
   const [status, setStatus] = useState("");
@@ -22,9 +23,11 @@ function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      <Route element={<HeaderLayout />}>
-        <Route path="/" element={<HealthCheck />} />
-        <Route path="/profile/new" element={<ProfileCreate />} />
+      <Route element={<RequireAuth />}>
+        <Route element={<HeaderLayout />}>
+          <Route path="/" element={<HealthCheck />} />
+          <Route path="/profile/new" element={<ProfileCreate />} />
+        </Route>
       </Route>
     </Routes>
   );
