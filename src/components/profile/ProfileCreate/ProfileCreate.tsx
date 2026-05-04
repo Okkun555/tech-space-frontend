@@ -1,18 +1,19 @@
-import type { FC } from "react";
+import type { CSSProperties, FC } from "react";
 import { Controller } from "react-hook-form";
 import {
-  Base,
-  Button,
-  Center,
+  Cluster,
   FormControl,
-  Heading,
   Input,
+  PageHeading,
   RadioButton,
+  Section,
   Select,
-  SmartHRLogo,
   Stack,
+  StatusLabel,
+  Text,
   Textarea,
 } from "smarthr-ui";
+import { PrimaryButton } from "../../shared/PrimaryButton";
 import { useProfileCreate } from "./useProfileCreate";
 
 const genderOptions = [
@@ -20,6 +21,9 @@ const genderOptions = [
   { value: "female", label: "女性" },
   { value: "other", label: "その他" },
 ] as const;
+
+const requiredLabel = <StatusLabel type="red">必須</StatusLabel>;
+const optionalLabel = <StatusLabel>任意</StatusLabel>;
 
 export const ProfileCreate: FC = () => {
   const {
@@ -39,25 +43,21 @@ export const ProfileCreate: FC = () => {
   }));
 
   return (
-    <Center
-      minHeight="100svh"
-      padding={1}
-      verticalCentering
-      style={{ backgroundColor: "var(--shr-color-base-grey)" }}
-    >
-      <Base padding={3} radius="m" layer={3} style={{ width: 480 }}>
-        <Stack gap={2} align="stretch">
-          <Stack gap={2} align="center">
-            <SmartHRLogo fill="brand" />
-            <Heading type="sectionTitle" size="L">
-              プロフィール作成
-            </Heading>
-          </Stack>
+    <div style={pageStyle}>
+      <Stack gap={2} align="stretch">
+        <Stack gap={0.75} align="stretch">
+          <PageHeading>プロフィール作成</PageHeading>
+          <Text color="TEXT_GREY">
+            あなたの情報を入力してください。登録した内容は他のメンバーに公開されます。
+          </Text>
+        </Stack>
 
+        <Section>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Stack gap={1.25} align="stretch">
+            <Stack gap={1.5} align="stretch">
               <FormControl
                 label="アカウント名"
+                statusLabels={requiredLabel}
                 errorMessages={errors.name?.message}
               >
                 <Input
@@ -71,12 +71,12 @@ export const ProfileCreate: FC = () => {
 
               <FormControl
                 label="生年月日"
+                statusLabels={requiredLabel}
                 errorMessages={errors.birthday?.message}
               >
                 <Input
                   type="date"
                   autoComplete="bday"
-                  width="100%"
                   error={!!errors.birthday}
                   {...register("birthday")}
                 />
@@ -84,9 +84,10 @@ export const ProfileCreate: FC = () => {
 
               <FormControl
                 label="性別"
+                statusLabels={requiredLabel}
                 errorMessages={errors.gender?.message}
               >
-                <Stack gap={0.5}>
+                <Cluster gap={1.25}>
                   {genderOptions.map((option) => (
                     <RadioButton
                       key={option.value}
@@ -96,11 +97,12 @@ export const ProfileCreate: FC = () => {
                       {option.label}
                     </RadioButton>
                   ))}
-                </Stack>
+                </Cluster>
               </FormControl>
 
               <FormControl
                 label="職業"
+                statusLabels={requiredLabel}
                 errorMessages={errors.occupationId?.message}
               >
                 <Controller
@@ -125,6 +127,8 @@ export const ProfileCreate: FC = () => {
 
               <FormControl
                 label="自己紹介"
+                statusLabels={optionalLabel}
+                helpMessage="興味のある分野や活動内容など、自由に記入できます（500文字まで）。"
                 errorMessages={errors.introduction?.message}
               >
                 <Textarea
@@ -136,19 +140,25 @@ export const ProfileCreate: FC = () => {
                 />
               </FormControl>
 
-              <Button
-                type="submit"
-                variant="primary"
-                wide
-                loading={isMutating}
-                disabled={isMutating}
-              >
-                プロフィールを登録
-              </Button>
+              <Cluster justify="flex-end" gap={1}>
+                <PrimaryButton
+                  type="submit"
+                  loading={isMutating}
+                  disabled={isMutating}
+                >
+                  プロフィールを登録
+                </PrimaryButton>
+              </Cluster>
             </Stack>
           </form>
-        </Stack>
-      </Base>
-    </Center>
+        </Section>
+      </Stack>
+    </div>
   );
+};
+
+const pageStyle: CSSProperties = {
+  maxWidth: 720,
+  margin: "0 auto",
+  padding: "32px 24px 64px",
 };
