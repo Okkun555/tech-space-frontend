@@ -1,103 +1,95 @@
-import type {FC} from "react";
-import {Link} from "react-router-dom";
-import {
-  Base,
-  Button,
-  Center,
-  FormControl,
-  Heading,
-  Input,
-  SmartHRLogo,
-  Stack,
-  TextLink,
-} from "smarthr-ui"
-import {useSignup} from "./useSignup.ts";
+import type { FC } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { useSignup } from "./useSignup.ts";
 
 export const Signup: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    isMutating,
-  } = useSignup()
+  const { register, handleSubmit, onSubmit, errors, isMutating } = useSignup();
 
   return (
-    <Center
-      minHeight="100svh"
-      padding={1}
-      verticalCentering
-      style={{ backgroundColor: "var(--shr-color-base-grey)" }}
-    >
-      <Base padding={3} radius="m" layer={3} style={{ width: 480 }}>
-        <Stack gap={2} align="stretch">
-          <Stack gap={2} align="center">
-            <SmartHRLogo fill="brand" />
-            <Heading type="sectionTitle" size="L">
-              Tech Space アカウント作成
-            </Heading>
-          </Stack>
+    <div className="flex min-h-svh items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md">
+        <CardContent className="flex flex-col gap-6 p-8">
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="font-display text-lg uppercase tracking-widest">
+              Tech Space
+            </h1>
+            <p className="font-mono text-sm text-muted-foreground">
+              アカウント作成
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Stack gap={1.25} align="stretch">
-              <FormControl
-                label="メールアドレス"
-                errorMessages={errors.email?.message}
-              >
-                <Input
-                  type="email"
-                  autoComplete="email"
-                  width="100%"
-                  error={!!errors.email}
-                  {...register("email")}
-                />
-              </FormControl>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="flex flex-col gap-4"
+          >
+            <Field
+              label="メールアドレス"
+              htmlFor="signup-email"
+              errorMessage={errors.email?.message}
+            >
+              <Input
+                id="signup-email"
+                type="email"
+                autoComplete="email"
+                invalid={!!errors.email}
+                {...register("email")}
+              />
+            </Field>
 
-              <FormControl
-                label="パスワード"
-                errorMessages={errors.password?.message}
-              >
-                <Input
-                  type="password"
-                  autoComplete="new-password"
-                  width="100%"
-                  error={!!errors.password}
-                  {...register("password")}
-                />
-              </FormControl>
+            <Field
+              label="パスワード"
+              htmlFor="signup-password"
+              errorMessage={errors.password?.message}
+            >
+              <Input
+                id="signup-password"
+                type="password"
+                autoComplete="new-password"
+                invalid={!!errors.password}
+                {...register("password")}
+              />
+            </Field>
 
-              <FormControl
-                label="パスワード（確認）"
-                errorMessages={errors.passwordConfirmation?.message}
-              >
-                <Input
-                  type="password"
-                  autoComplete="new-password"
-                  width="100%"
-                  error={!!errors.passwordConfirmation}
-                  {...register("passwordConfirmation")}
-                />
-              </FormControl>
+            <Field
+              label="パスワード（確認）"
+              htmlFor="signup-password-confirmation"
+              errorMessage={errors.passwordConfirmation?.message}
+            >
+              <Input
+                id="signup-password-confirmation"
+                type="password"
+                autoComplete="new-password"
+                invalid={!!errors.passwordConfirmation}
+                {...register("passwordConfirmation")}
+              />
+            </Field>
 
-              <Button
-                type="submit"
-                variant="primary"
-                wide
-                loading={isMutating}
-                disabled={isMutating}
-              >
-                アカウント作成
-              </Button>
-            </Stack>
+            <Button
+              type="submit"
+              variant="primary"
+              size="wide"
+              loading={isMutating}
+              disabled={isMutating}
+            >
+              アカウント作成
+            </Button>
           </form>
 
-          <Stack gap={0.5} align="center">
-            <TextLink elementAs={Link} to="/login">
+          <div className="flex justify-center">
+            <Link
+              to="/login"
+              className="font-mono text-sm text-foreground underline underline-offset-4 hover:text-accent"
+            >
               既にアカウントをお持ちの方はこちら
-            </TextLink>
-          </Stack>
-        </Stack>
-      </Base>
-    </Center>
-  )
-}
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};

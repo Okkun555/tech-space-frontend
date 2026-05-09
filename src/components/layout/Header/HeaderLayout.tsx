@@ -1,6 +1,6 @@
-import type { CSSProperties, FC } from "react";
+import type { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { Button } from "smarthr-ui";
+import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 import { useLogout } from "../../../hooks/useLogout";
 
@@ -10,15 +10,18 @@ export const HeaderLayout: FC = () => {
 
   return (
     <>
-      <header style={headerStyle}>
-        <NavLink to="/" style={brandStyle}>
+      <header className="flex h-16 items-center border-b-4 border-foreground bg-foreground px-6 text-background">
+        <NavLink
+          to="/"
+          className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-widest text-background no-underline"
+        >
           <svg
-            width="28"
-            height="28"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden
@@ -30,11 +33,13 @@ export const HeaderLayout: FC = () => {
         </NavLink>
 
         {currentUser && (
-          <div style={userMenuStyle}>
-            <span style={userEmailStyle}>{currentUser.email}</span>
+          <div className="ml-auto flex items-center gap-3">
+            <span className="font-mono text-sm text-background/70">
+              {currentUser.email}
+            </span>
             <Button
-              size="S"
-              variant="secondary"
+              size="sm"
+              variant="accent"
               onClick={logout}
               loading={isMutating}
               disabled={isMutating}
@@ -44,74 +49,9 @@ export const HeaderLayout: FC = () => {
           </div>
         )}
       </header>
-      <main style={mainStyle}>
+      <main className="min-h-[calc(100svh-4rem)] bg-background">
         <Outlet />
       </main>
     </>
   );
-};
-
-const HEADER_BG = "#1f2328";
-const HEADER_BORDER = "#30363d";
-const HEADER_TEXT = "#f0f6fc";
-const HEADER_TEXT_MUTED = "#9da7b3";
-const HEADER_ACTIVE_ACCENT = "#fb8500";
-
-const headerStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  height: 62,
-  padding: "0 24px",
-  backgroundColor: HEADER_BG,
-  borderBottom: `1px solid ${HEADER_BORDER}`,
-  color: HEADER_TEXT,
-};
-
-const brandStyle: CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 10,
-  textDecoration: "none",
-  color: HEADER_TEXT,
-  fontWeight: 600,
-  fontSize: 16,
-};
-
-const navStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: 20,
-  marginLeft: 32,
-  flex: 1,
-};
-
-const baseNavLinkStyle: CSSProperties = {
-  textDecoration: "none",
-  fontSize: 14,
-  fontWeight: 500,
-  padding: "6px 4px",
-  borderBottom: "2px solid transparent",
-};
-
-const getNavLinkStyle = (isActive: boolean): CSSProperties => ({
-  ...baseNavLinkStyle,
-  color: isActive ? HEADER_TEXT : HEADER_TEXT_MUTED,
-  borderBottomColor: isActive ? HEADER_ACTIVE_ACCENT : "transparent",
-});
-
-const mainStyle: CSSProperties = {
-  minHeight: "calc(100svh - 62px)",
-  backgroundColor: "var(--shr-color-base-grey)",
-};
-
-const userMenuStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: 12,
-  marginLeft: "auto",
-};
-
-const userEmailStyle: CSSProperties = {
-  fontSize: 13,
-  color: HEADER_TEXT_MUTED,
 };

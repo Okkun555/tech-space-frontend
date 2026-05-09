@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Center, Loader } from "smarthr-ui";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 export const RequireAuth: FC = () => {
@@ -9,9 +8,11 @@ export const RequireAuth: FC = () => {
 
   if (isLoading) {
     return (
-      <Center minHeight="100svh" verticalCentering>
-        <Loader />
-      </Center>
+      <div className="flex min-h-svh items-center justify-center bg-background">
+        <span className="font-display text-sm uppercase tracking-widest text-foreground animate-pulse">
+          Loading...
+        </span>
+      </div>
     );
   }
 

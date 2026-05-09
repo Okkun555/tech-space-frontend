@@ -1,18 +1,17 @@
-import type { CSSProperties, FC } from "react";
+import type { FC } from "react";
 import { Controller } from "react-hook-form";
+import { Badge } from "@/components/ui/badge";
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  Cluster,
-  FormControl,
-  Input,
-  PageHeading,
-  RadioButton,
-  Section,
   Select,
-  Stack,
-  StatusLabel,
-  Text,
-  Textarea,
-} from "smarthr-ui";
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { PrimaryButton } from "../../shared/PrimaryButton";
 import { useProfileCreate } from "./useProfileCreate";
 
@@ -22,8 +21,8 @@ const genderOptions = [
   { value: "other", label: "その他" },
 ] as const;
 
-const requiredLabel = <StatusLabel type="red">必須</StatusLabel>;
-const optionalLabel = <StatusLabel>任意</StatusLabel>;
+const requiredBadge = <Badge variant="required">必須</Badge>;
+const optionalBadge = <Badge>任意</Badge>;
 
 export const ProfileCreate: FC = () => {
   const {
@@ -37,128 +36,146 @@ export const ProfileCreate: FC = () => {
     isOccupationsLoading,
   } = useProfileCreate();
 
-  const occupationOptions = occupations.map((occupation) => ({
-    value: String(occupation.id),
-    label: occupation.name,
-  }));
-
   return (
-    <div style={pageStyle}>
-      <Stack gap={2} align="stretch">
-        <Stack gap={0.75} align="stretch">
-          <PageHeading>プロフィール作成</PageHeading>
-          <Text color="TEXT_GREY">
+    <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-display text-2xl uppercase tracking-widest">
+            プロフィール作成
+          </h1>
+          <p className="font-mono text-base text-muted-foreground">
             あなたの情報を入力してください。登録した内容は他のメンバーに公開されます。
-          </Text>
-        </Stack>
+          </p>
+        </div>
 
-        <Section>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Stack gap={1.5} align="stretch">
-              <FormControl
-                label="アカウント名"
-                statusLabels={requiredLabel}
-                errorMessages={errors.name?.message}
-              >
-                <Input
-                  type="text"
-                  autoComplete="nickname"
-                  width="100%"
-                  error={!!errors.name}
-                  {...register("name")}
-                />
-              </FormControl>
+        <section className="border-2 border-foreground bg-card p-8 shadow-[8px_8px_0_0_var(--color-foreground)]">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="flex flex-col gap-6"
+          >
+            <Field
+              label="アカウント名"
+              htmlFor="profile-name"
+              badge={requiredBadge}
+              errorMessage={errors.name?.message}
+            >
+              <Input
+                id="profile-name"
+                type="text"
+                autoComplete="nickname"
+                invalid={!!errors.name}
+                {...register("name")}
+              />
+            </Field>
 
-              <FormControl
-                label="生年月日"
-                statusLabels={requiredLabel}
-                errorMessages={errors.birthday?.message}
-              >
-                <Input
-                  type="date"
-                  autoComplete="bday"
-                  error={!!errors.birthday}
-                  {...register("birthday")}
-                />
-              </FormControl>
+            <Field
+              label="生年月日"
+              htmlFor="profile-birthday"
+              badge={requiredBadge}
+              errorMessage={errors.birthday?.message}
+            >
+              <Input
+                id="profile-birthday"
+                type="date"
+                autoComplete="bday"
+                invalid={!!errors.birthday}
+                {...register("birthday")}
+              />
+            </Field>
 
-              <FormControl
-                label="性別"
-                statusLabels={requiredLabel}
-                errorMessages={errors.gender?.message}
-              >
-                <Cluster gap={1.25}>
-                  {genderOptions.map((option) => (
-                    <RadioButton
-                      key={option.value}
-                      value={option.value}
-                      {...register("gender")}
-                    >
-                      {option.label}
-                    </RadioButton>
-                  ))}
-                </Cluster>
-              </FormControl>
+            <Field
+              label="性別"
+              badge={requiredBadge}
+              errorMessage={errors.gender?.message}
+            >
+              <Controller
+                control={control}
+                name="gender"
+                render={({ field }) => (
+                  <RadioGroup
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    name={field.name}
+                    className="flex flex-wrap gap-5"
+                  >
+                    {genderOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className="inline-flex cursor-pointer items-center gap-2 font-mono text-base"
+                      >
+                        <RadioGroupItem value={option.value} />
+                        <span>{option.label}</span>
+                      </label>
+                    ))}
+                  </RadioGroup>
+                )}
+              />
+            </Field>
 
-              <FormControl
-                label="職業"
-                statusLabels={requiredLabel}
-                errorMessages={errors.occupationId?.message}
-              >
-                <Controller
-                  control={control}
-                  name="occupationId"
-                  render={({ field }) => (
-                    <Select
-                      options={occupationOptions}
-                      hasBlank
-                      blankLabel="選択してください"
-                      width="100%"
-                      error={!!errors.occupationId}
-                      disabled={isOccupationsLoading}
-                      name={field.name}
-                      value={field.value}
-                      onChange={field.onChange}
+            <Field
+              label="職業"
+              badge={requiredBadge}
+              errorMessage={errors.occupationId?.message}
+            >
+              <Controller
+                control={control}
+                name="occupationId"
+                render={({ field }) => (
+                  <Select
+                    value={field.value || undefined}
+                    onValueChange={field.onChange}
+                    disabled={isOccupationsLoading}
+                  >
+                    <SelectTrigger
+                      invalid={!!errors.occupationId}
                       onBlur={field.onBlur}
-                    />
-                  )}
-                />
-              </FormControl>
+                    >
+                      <SelectValue placeholder="選択してください" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {occupations.map((occupation) => (
+                        <SelectItem
+                          key={occupation.id}
+                          value={String(occupation.id)}
+                        >
+                          {occupation.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </Field>
 
-              <FormControl
-                label="自己紹介"
-                statusLabels={optionalLabel}
-                helpMessage="興味のある分野や活動内容など、自由に記入できます（500文字まで）。"
-                errorMessages={errors.introduction?.message}
+            <Field
+              label="自己紹介"
+              htmlFor="profile-introduction"
+              badge={optionalBadge}
+              helpText="興味のある分野や活動内容など、自由に記入できます（500文字まで）。"
+              errorMessage={errors.introduction?.message}
+            >
+              <Textarea
+                id="profile-introduction"
+                rows={5}
+                maxLength={500}
+                invalid={!!errors.introduction}
+                {...register("introduction")}
+              />
+            </Field>
+
+            <div className="flex justify-end">
+              <PrimaryButton
+                type="submit"
+                loading={isMutating}
+                disabled={isMutating}
               >
-                <Textarea
-                  width="100%"
-                  rows={5}
-                  maxLetters={500}
-                  error={!!errors.introduction}
-                  {...register("introduction")}
-                />
-              </FormControl>
-
-              <Cluster justify="flex-end" gap={1}>
-                <PrimaryButton
-                  type="submit"
-                  loading={isMutating}
-                  disabled={isMutating}
-                >
-                  プロフィールを登録
-                </PrimaryButton>
-              </Cluster>
-            </Stack>
+                プロフィールを登録
+              </PrimaryButton>
+            </div>
           </form>
-        </Section>
-      </Stack>
+        </section>
+      </div>
     </div>
   );
-};
-
-const pageStyle: CSSProperties = {
-  maxWidth: 720,
-  margin: "0 auto",
-  padding: "32px 24px 64px",
 };
