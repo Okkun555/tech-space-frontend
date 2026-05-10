@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
-import { API_PATHS } from "../../../constants/paths";
+import { API_PATHS } from "@/constants/paths";
 import {
   fieldLabels,
   validationMessages,
-} from "../../../constants/validationMessages";
-import { postFetcher } from "../../../libs/api";
-import type { SignupRequest, SignupResponse } from "../../../types/api/auth";
+} from "@/constants/validationMessages";
+import { postFetcher } from "@/libs/api";
+import type { SignupRequest, SignupResponse } from "@/types/api/auth";
 
 const signupSchema = z
   .object({

@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
-import { API_PATHS } from "../../../constants/paths";
+import { API_PATHS } from "@/constants/paths";
 import {
   fieldLabels,
   validationMessages,
-} from "../../../constants/validationMessages";
-import { getFetcher, postFetcher } from "../../../libs/api";
+} from "@/constants/validationMessages";
+import { getFetcher, postFetcher } from "@/libs/api";
 import type {
   OccupationsResponse,
   ProfileCreateRequest,
   ProfileCreateResponse,
-} from "../../../types/api/profile";
+} from "@/types/api/profile";
 
 const profileCreateSchema = z.object({
   name: z

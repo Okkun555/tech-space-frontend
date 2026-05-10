@@ -1,7 +1,7 @@
 import useSWR from "swr";
-import { API_PATHS } from "../constants/paths";
-import { ApiError, getFetcher } from "../libs/api";
-import type { MeResponse } from "../types/api/auth";
+import { API_PATHS } from "@/constants/paths";
+import { ApiError, getFetcher } from "@/libs/api";
+import type { MeResponse } from "@/types/api/auth";
 
 export const CURRENT_USER_KEY = API_PATHS.auth.me;
 

@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "../../../hooks/useCurrentUser";
-import { useLogout } from "../../../hooks/useLogout";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useLogout } from "@/hooks/useLogout";
 
 export const HeaderLayout: FC = () => {
   const { currentUser } = useCurrentUser();
@@ -34,8 +34,10 @@ export const HeaderLayout: FC = () => {
 
         {currentUser && (
           <div className="ml-auto flex items-center gap-3">
-            <span className="font-mono text-sm text-background/70">
-              {currentUser.email}
+            <span className="font-mono text-3xl text-background/70">
+              {currentUser.profile
+                ? currentUser.profile.name
+                : currentUser.email}
             </span>
             <Button
               size="sm"

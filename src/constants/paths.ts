@@ -11,4 +11,7 @@ export const API_PATHS = {
   occupations: {
     index: "/api/occupations",
   },
+  posts: {
+    index: "/api/posts",
+  },
 } as const;

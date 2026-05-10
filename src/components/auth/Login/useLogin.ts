@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
-import { API_PATHS } from "../../../constants/paths";
+import { API_PATHS } from "@/constants/paths";
 import {
   fieldLabels,
   validationMessages,
-} from "../../../constants/validationMessages";
-import { CURRENT_USER_KEY } from "../../../hooks/useCurrentUser";
-import { postFetcher } from "../../../libs/api";
-import type { LoginRequest, LoginResponse } from "../../../types/api/auth";
+} from "@/constants/validationMessages";
+import { CURRENT_USER_KEY } from "@/hooks/useCurrentUser";
+import { postFetcher } from "@/libs/api";
+import type { LoginRequest, LoginResponse } from "@/types/api/auth";
 
 const loginSchema = z.object({
   email: z

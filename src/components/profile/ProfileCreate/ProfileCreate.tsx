@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PrimaryButton } from "../../shared/PrimaryButton";
+import { PrimaryButton } from "@/components/shared/PrimaryButton";
 import { useProfileCreate } from "./useProfileCreate";
 
 const genderOptions = [

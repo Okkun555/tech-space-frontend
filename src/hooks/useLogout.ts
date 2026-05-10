@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
-import { API_PATHS } from "../constants/paths";
-import { deleteFetcher } from "../libs/api";
+import { API_PATHS } from "@/constants/paths";
+import { deleteFetcher } from "@/libs/api";
 import { CURRENT_USER_KEY } from "./useCurrentUser";
 
 export const useLogout = () => {

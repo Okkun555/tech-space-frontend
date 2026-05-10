@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "../../../hooks/useCurrentUser.ts";
-import { useLogin } from "./useLogin.ts";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useLogin } from "./useLogin";
 
 export const Login: FC = () => {
   const navigate = useNavigate();

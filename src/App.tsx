@@ -1,22 +1,10 @@
-import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import ProfileCreate from "./pages/ProfileCreatePage";
-import { HeaderLayout } from "./components/layout/Header";
-import { RequireAuth } from "./components/auth/RequireAuth";
-
-function HealthCheck() {
-  const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3000/health/check")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status));
-  }, []);
-
-  return <div>{status}</div>;
-}
+import LoginPage from "@/pages/LoginPage";
+import SignupPage from "@/pages/SignupPage";
+import ProfileCreate from "@/pages/ProfileCreatePage";
+import TimeLinePage from "@/pages/TimeLinePage";
+import { HeaderLayout } from "@/components/layout/Header";
+import { RequireAuth } from "@/components/auth/RequireAuth";
 
 function App() {
   return (
@@ -25,7 +13,7 @@ function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route element={<RequireAuth />}>
         <Route element={<HeaderLayout />}>
-          <Route path="/" element={<HealthCheck />} />
+          <Route path="/" element={<TimeLinePage />} />
           <Route path="/profile/new" element={<ProfileCreate />} />
         </Route>
       </Route>
