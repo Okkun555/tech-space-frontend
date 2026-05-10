@@ -4,7 +4,7 @@ import SignupPage from "@/pages/SignupPage";
 import ProfileCreate from "@/pages/ProfileCreatePage";
 import TimeLinePage from "@/pages/TimeLinePage";
 import { HeaderLayout } from "@/components/layout/Header";
-import { RequireAuth } from "@/components/auth/RequireAuth";
+import { RequireAuth } from "@/features/auth/components/RequireAuth";
 
 function App() {
   return (

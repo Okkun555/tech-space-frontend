@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useCurrentUser } from "@/features/shared/hooks/useCurrentUser";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
 
 export const RequireAuth: FC = () => {
   const { isLoggedIn, isLoading } = useCurrentUser();

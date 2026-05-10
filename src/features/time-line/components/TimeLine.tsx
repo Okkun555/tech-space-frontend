@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useTimeLine } from "./useTimeLine";
+import { useTimeLine } from "../hooks/useTimeLine";
 import { Button } from "@/components/ui/button";
 import { PostThread } from "./PostThread";
 

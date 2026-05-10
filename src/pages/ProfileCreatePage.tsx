@@ -1,1 +1,1 @@
-export { ProfileCreate as default } from "@/components/profile/ProfileCreate";
+export { ProfileCreate as default } from "@/features/profile/components/ProfileCreate";

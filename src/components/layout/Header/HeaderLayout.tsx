@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/features/shared/hooks/useCurrentUser";
-import { useLogout } from "@/features/shared/hooks/useLogout";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
+import { useLogout } from "@/features/auth/hooks/useLogout";
 
 export const HeaderLayout: FC = () => {
   const { currentUser } = useCurrentUser();

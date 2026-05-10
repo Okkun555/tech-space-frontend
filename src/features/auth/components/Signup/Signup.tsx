@@ -1,21 +1,13 @@
-import { useEffect, type FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import type { FC } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/features/shared/hooks/useCurrentUser";
-import { useLogin } from "./useLogin";
+import { useSignup } from "../../hooks/useSignup";
 
-export const Login: FC = () => {
-  const navigate = useNavigate();
-  const { isLoggedIn, hasProfile, isLoading } = useCurrentUser();
-  const { register, handleSubmit, onSubmit, errors, isMutating } = useLogin();
-
-  useEffect(() => {
-    if (isLoading || !isLoggedIn) return;
-    navigate(hasProfile ? "/" : "/profile/new", { replace: true });
-  }, [isLoading, isLoggedIn, hasProfile, navigate]);
+export const Signup: FC = () => {
+  const { register, handleSubmit, onSubmit, errors, isMutating } = useSignup();
 
   return (
     <div className="flex min-h-svh items-center justify-center bg-background p-4">
@@ -26,7 +18,7 @@ export const Login: FC = () => {
               Tech Space
             </h1>
             <p className="font-mono text-sm text-muted-foreground">
-              ログイン画面
+              アカウント作成
             </p>
           </div>
 
@@ -37,11 +29,11 @@ export const Login: FC = () => {
           >
             <Field
               label="メールアドレス"
-              htmlFor="login-email"
+              htmlFor="signup-email"
               errorMessage={errors.email?.message}
             >
               <Input
-                id="login-email"
+                id="signup-email"
                 type="email"
                 autoComplete="email"
                 invalid={!!errors.email}
@@ -51,15 +43,29 @@ export const Login: FC = () => {
 
             <Field
               label="パスワード"
-              htmlFor="login-password"
+              htmlFor="signup-password"
               errorMessage={errors.password?.message}
             >
               <Input
-                id="login-password"
+                id="signup-password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 invalid={!!errors.password}
                 {...register("password")}
+              />
+            </Field>
+
+            <Field
+              label="パスワード（確認）"
+              htmlFor="signup-password-confirmation"
+              errorMessage={errors.passwordConfirmation?.message}
+            >
+              <Input
+                id="signup-password-confirmation"
+                type="password"
+                autoComplete="new-password"
+                invalid={!!errors.passwordConfirmation}
+                {...register("passwordConfirmation")}
               />
             </Field>
 
@@ -70,16 +76,16 @@ export const Login: FC = () => {
               loading={isMutating}
               disabled={isMutating}
             >
-              ログイン
+              アカウント作成
             </Button>
           </form>
 
           <div className="flex justify-center">
             <Link
-              to="/signup"
+              to="/login"
               className="font-mono text-sm text-foreground underline underline-offset-4 hover:text-accent"
             >
-              アカウント作成はこちら
+              既にアカウントをお持ちの方はこちら
             </Link>
           </div>
         </CardContent>
