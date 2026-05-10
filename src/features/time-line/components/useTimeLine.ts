@@ -1,6 +1,6 @@
 import { API_PATHS } from "@/constants/paths";
-import { usePagination } from "@/features/shared/pagination/usePagination";
-import { getFetcher } from "@/libs/api";
+import { usePagination } from "@/features/shared/hooks/usePagination";
+import { getFetcher } from "@/lib/api";
 import type { PostsResponse } from "@/types/api";
 import useSWR from "swr";
 

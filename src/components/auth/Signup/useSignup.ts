@@ -8,7 +8,7 @@ import {
   fieldLabels,
   validationMessages,
 } from "@/constants/validationMessages";
-import { postFetcher } from "@/libs/api";
+import { postFetcher } from "@/lib/api";
 import type { SignupRequest, SignupResponse } from "@/types/api/auth";
 
 const signupSchema = z

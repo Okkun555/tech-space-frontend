@@ -9,7 +9,7 @@ import {
   fieldLabels,
   validationMessages,
 } from "@/constants/validationMessages";
-import { getFetcher, postFetcher } from "@/libs/api";
+import { getFetcher, postFetcher } from "@/lib/api";
 import type {
   OccupationsResponse,
   ProfileCreateRequest,
