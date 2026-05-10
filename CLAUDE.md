@@ -38,7 +38,7 @@ features/
 - `time-line/` — タイムライン（本構成を最初に採用した機能）
 - `shared/` — 複数機能で共有するhooks（useCurrentUser, useLogout, usePagination）
 
-### `src/lib/`
+### `src/libs/`
 
 汎用ユーティリティ。SWR用のfetcher（api.ts）、formatTimestamp等。
 
