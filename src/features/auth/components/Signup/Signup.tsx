@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useSignup } from "../../hooks/useSignup";
+import { useSignup } from "./useSignup";
 
 export const Signup: FC = () => {
   const { register, handleSubmit, onSubmit, errors, isMutating } = useSignup();

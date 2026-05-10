@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { API_PATHS } from "@/constants/paths";
-import { usePagination } from "@/hooks/usePagination";
-import { getFetcher } from "@/lib/api";
+import { usePagination } from "@/features/shared/hooks/usePagination";
+import { getFetcher } from "@/libs/api";
 import type { PostsResponse } from "@/types/api";
 
 export const useTimeLine = () => {

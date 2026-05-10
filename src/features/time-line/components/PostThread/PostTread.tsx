@@ -1,4 +1,4 @@
-import { formatTimestamp } from "@/lib/formatTimestamp";
+import { formatTimestamp } from "@/libs/formatTimestamp";
 import type { Post } from "@/types/post";
 import type { FC } from "react";
 

@@ -8,8 +8,8 @@ import {
   fieldLabels,
   validationMessages,
 } from "@/constants/validationMessages";
-import { CURRENT_USER_KEY } from "./useCurrentUser";
-import { postFetcher } from "@/lib/api";
+import { CURRENT_USER_KEY } from "@/features/shared/hooks/useCurrentUser";
+import { postFetcher } from "@/libs/api";
 import type { LoginRequest, LoginResponse } from "@/types/api/auth";
 
 const loginSchema = z.object({

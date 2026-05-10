@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { PrimaryButton } from "@/components/shared/PrimaryButton";
-import { useProfileCreate } from "../../hooks/useProfileCreate";
+import { useProfileCreate } from "./useProfileCreate";
 
 const genderOptions = [
   { value: "male", label: "男性" },
