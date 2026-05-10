@@ -13,5 +13,6 @@ export const API_PATHS = {
   },
   posts: {
     index: "/api/posts",
+    destroy: (id: number) => `/api/posts/${id}`,
   },
 } as const;

@@ -2,10 +2,12 @@ import type { FC } from "react";
 import { useTimeLine } from "./useTimeLine";
 import { Button } from "@/components/ui/button";
 import { PostThread } from "./PostThread";
+import { useCurrentUser } from "@/features/shared/hooks/useCurrentUser";
 
 export const TimeLine: FC = () => {
   const { posts, pagination, page, setPage, isLoading, error, refresh } =
     useTimeLine();
+  const { currentUser } = useCurrentUser();
 
   const totalPages = pagination?.total_pages ?? 1;
   const totalCount = pagination?.total_count ?? 0;
@@ -75,7 +77,12 @@ export const TimeLine: FC = () => {
         <div className="flex flex-col gap-5">
           {posts.map((post, index) => (
             <div key={post.id} className="flex flex-col gap-3">
-              <PostThread post={post} index={index} />
+              <PostThread
+                  post={post}
+                  index={index}
+                  currentUserProfileId={currentUser?.profile?.id}
+                  onDeleted={() => refresh()}
+                />
             </div>
           ))}
         </div>
