@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { mutate } from "swr";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
@@ -9,6 +10,7 @@ import {
   fieldLabels,
   validationMessages,
 } from "@/constants/validationMessages";
+import { CURRENT_USER_KEY } from "@/features/shared/hooks/useCurrentUser";
 import { getFetcher, postFetcher } from "@/libs/api";
 import type {
   OccupationsResponse,
@@ -88,6 +90,7 @@ export const useProfileCreate = () => {
         sns_links: [],
       },
     });
+    await mutate(CURRENT_USER_KEY);
     navigate("/");
   };
 

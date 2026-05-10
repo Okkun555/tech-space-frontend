@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
+import { useNavigate } from "react-router-dom";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
 import { API_PATHS } from "@/constants/paths";
@@ -32,6 +32,8 @@ const signupSchema = z
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 export const useSignup = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -58,6 +60,7 @@ export const useSignup = () => {
         password_confirmation: data.passwordConfirmation,
       },
     });
+    navigate("/profile/new");
   };
 
   return {

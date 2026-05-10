@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useCurrentUser } from "@/features/shared/hooks/useCurrentUser";
 
 export const RequireAuth: FC = () => {
-  const { isLoggedIn, isLoading } = useCurrentUser();
+  const { isLoggedIn, hasProfile, isLoading } = useCurrentUser();
   const location = useLocation();
 
   if (isLoading) {
@@ -18,6 +18,10 @@ export const RequireAuth: FC = () => {
 
   if (!isLoggedIn) {
     return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  if (!hasProfile && location.pathname !== "/profile/new") {
+    return <Navigate to="/profile/new" replace />;
   }
 
   return <Outlet />;
